@@ -18,26 +18,23 @@ if($hidden){
 }
 
 function login() {
-  Add-Content -Path "$env:APPDATA\ttcli\log.json" -Value "Logged in at: $(Get-Date -Format "dddd MM/dd/yyyy HH:mm K")"
+  Add-Content -Path "$env:APPDATA\ttcli\log.txt" -Value "Logged in at: $(Get-Date -Format "dddd MM/dd/yyyy HH:mm K")"
 }
 
 function lock(){
-  Add-Content -Path "$env:APPDATA\ttcli\log.json" -Value "Locked at: $(Get-Date -Format "dddd MM/dd/yyyy HH:mm K")"
+  Add-Content -Path "$env:APPDATA\ttcli\log.txt" -Value "Locked at: $(Get-Date -Format "dddd MM/dd/yyyy HH:mm K")"
 }
 
 function unlock(){
-  Add-Content -Path "$env:APPDATA\ttcli\log.json" -Value "Unlocked at: $(Get-Date -Format "dddd MM/dd/yyyy HH:mm K")"
+  Add-Content -Path "$env:APPDATA\ttcli\log.txt" -Value "Unlocked at: $(Get-Date -Format "dddd MM/dd/yyyy HH:mm K")"
+}
+
+function idle(){
+  Add-Content -Path "$env:APPDATA\ttcli\log.txt" -Value "Idle at: $(Get-Date -Format "dddd MM/dd/yyyy HH:mm K")"
 }
 
 function export(){
-
-}
-
-function close {
-  $events = Get-EventSubscriber | Where-Object { $_.SourceObject -eq [Microsoft.Win32.SystemEvents] } 
-  $jobs = $events | Select-Object -ExpandProperty Action
-  $events | Unregister-Event
-  $jobs | Remove-Job
+  Copy-Item -Path "$env:APPDATA\ttcli\log.txt" -Destination (Get-Location)
 }
 
 try{
