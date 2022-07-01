@@ -11,6 +11,12 @@ param (
   $debugScript
 )
 
+$config = Get-Content -Raw -Path "$env:APPDATA\ttcli\config.json" | ConvertFrom-Json
+
+if(!$config.color){
+  $config.color = "green"
+}
+
 if($hidden){
   $t = '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);'
   add-type -name win -member $t -namespace native
@@ -40,14 +46,14 @@ function export(){
 try{
   &$function
 }catch{
-  Write-Host "Welcome to TimeTrackerCLI by TD3V"
-  Write-Host "---------------------------------------------"
+  Write-Host "Welcome to TimeTrackerCLI by TD3V" -ForegroundColor $config.color
+  Write-Host "---------------------------------------------" -ForegroundColor $config.color
   if($debugScript){
-    Write-Host "The following error occured:"
-    Write-Host "$($_.Exception.Message)"
+    Write-Host "The following error occured:" -ForegroundColor $config.color
+    Write-Host "$($_.Exception.Message)" -ForegroundColor $config.color
   }else{
-    Write-Host "An error occured, if it persits you can check the documentation or contact the creator."
+    Write-Host "An error occured, if it persits you can check the documentation or contact the creator." -ForegroundColor $config.color
   }
-  Write-Host "---------------------------------------------"
+  Write-Host "---------------------------------------------" -ForegroundColor $config.color
 
 }
