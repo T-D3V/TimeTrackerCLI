@@ -17,6 +17,31 @@ if($hidden){
   [native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle, 0)
 }
 
+function track(){
+  $stopwatch =  [system.diagnostics.stopwatch]::StartNew()
+  $stopwatch.start()
+}
+
+function lock(){
+  $stopwatch.Stop()
+  Add-Content "$env:APPDATA\ttcli\log.json" (Get-Date -Format "dddd MM/dd/yyyy HH:mm K")
+}
+
+function unlock(){
+  $stopwatch.Start()
+}
+
+function export(){
+
+}
+
+function close {
+  $events = Get-EventSubscriber | Where-Object { $_.SourceObject -eq [Microsoft.Win32.SystemEvents] } 
+  $jobs = $events | Select-Object -ExpandProperty Action
+  $events | Unregister-Event
+  $jobs | Remove-Job
+}
+
 try{
   &$function
 }catch{
