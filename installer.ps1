@@ -31,6 +31,20 @@ try {
   $action.Path = "powershell"
   $action.Arguments = "ttcli unlock"
   $folder.RegisterTaskDefinition("TTCLI catch SessionUnlock", $definition, 6, "", "" , 0)
+
+  $scheduler = new-object -com("Schedule.Service")
+  $scheduler.Connect()
+  $folder = $scheduler.GetFolder("\")
+  $definition = $scheduler.NewTask(0)
+  $triggers = $definition.Triggers
+  $trigger = $triggers.Create(11) # TRIGGER_TYPE
+  $trigger.StateChange = 2 # TASK_SESSION_LOCK 
+
+  $action = $definition.Actions.Create(0)
+  $action.Path = "powershell"
+  $action.Arguments = "ttcli login"
+  $folder.RegisterTaskDefinition("TTCLI catch Login", $definition, 6, "", "" , 0)
+
   Write-Host "-------------------------------------------------------"
   Write-Host "Everything worked you can now use the script with ttcli as command"
 }

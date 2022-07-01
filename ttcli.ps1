@@ -17,18 +17,15 @@ if($hidden){
   [native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle, 0)
 }
 
-function track(){
-  $stopwatch =  [system.diagnostics.stopwatch]::StartNew()
-  $stopwatch.start()
+function login() {
+  Add-Content -Path "$env:APPDATA\ttcli\log.json" -Value "Logged in at: $(Get-Date -Format "dddd MM/dd/yyyy HH:mm K")"
 }
 
 function lock(){
-  $stopwatch.Stop()
   Add-Content -Path "$env:APPDATA\ttcli\log.json" -Value "Locked at: $(Get-Date -Format "dddd MM/dd/yyyy HH:mm K")"
 }
 
 function unlock(){
-  $stopwatch.Start()
   Add-Content -Path "$env:APPDATA\ttcli\log.json" -Value "Unlocked at: $(Get-Date -Format "dddd MM/dd/yyyy HH:mm K")"
 }
 
