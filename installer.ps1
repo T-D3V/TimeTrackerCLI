@@ -15,9 +15,10 @@ try {
   $trigger.StateChange = 7 # TASK_SESSION_LOCK 
 
   $action = $definition.Actions.Create(0)
-  $action.Path = "powershell.exe ttcli lock"
-  
-  $folder.RegisterTaskDefinition("TTCLI catch SessionUnlock", $definition, 6, "", "" , 0)
+  $action.Path = "powershell"
+  $action.Arguments = "ttcli lock"
+  $folder.RegisterTaskDefinition("TTCLI catch SessionLock", $definition, 6, "", "" , 0)
+
   $scheduler = new-object -com("Schedule.Service")
   $scheduler.Connect()
   $folder = $scheduler.GetFolder("\")
@@ -27,8 +28,9 @@ try {
   $trigger.StateChange = 8 # TASK_SESSION_LOCK 
 
   $action = $definition.Actions.Create(0)
-  $action.Path = "powershell.exe ttcli unlock"
-  $folder.RegisterTaskDefinition("TTCLI catch Sessionunlock", $definition, 6, "", "" , 0)
+  $action.Path = "powershell"
+  $action.Arguments = "ttcli unlock"
+  $folder.RegisterTaskDefinition("TTCLI catch SessionUnlock", $definition, 6, "", "" , 0)
   Write-Host "-------------------------------------------------------"
   Write-Host "Everything worked you can now use the script with ttcli as command"
 }
