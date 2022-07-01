@@ -24,11 +24,12 @@ function track(){
 
 function lock(){
   $stopwatch.Stop()
-  Add-Content "$env:APPDATA\ttcli\log.json" (Get-Date -Format "dddd MM/dd/yyyy HH:mm K")
+  Add-Content -Path "$env:APPDATA\ttcli\log.json" -Value "Locked at: $(Get-Date -Format "dddd MM/dd/yyyy HH:mm K")"
 }
 
 function unlock(){
   $stopwatch.Start()
+  Add-Content -Path "$env:APPDATA\ttcli\log.json" -Value "Unlocked at: $(Get-Date -Format "dddd MM/dd/yyyy HH:mm K")"
 }
 
 function export(){
