@@ -14,6 +14,7 @@ param (
 $config = Get-Content -Raw -Path "$env:APPDATA\ttcli\config.json" | ConvertFrom-Json
 
 if(!$config.color){
+  Add-Member -InputObject $config -NotePropertyName color
   $config.color = "green"
 }
 
