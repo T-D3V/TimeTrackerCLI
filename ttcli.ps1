@@ -13,11 +13,6 @@ param (
 
 $config = Get-Content -Raw -Path "$env:APPDATA\ttcli\config.json" | ConvertFrom-Json
 
-if(!$config.color){
-  Add-Member -InputObject $config -NotePropertyName color
-  $config.color = "green"
-}
-
 if($hidden){
   $t = '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);'
   add-type -name win -member $t -namespace native

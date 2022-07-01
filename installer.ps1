@@ -3,6 +3,7 @@ Write-Host "-------------------------------------------------------"
 try {
   New-Item -Path $env:APPDATA -Name "ttcli" -ItemType "directory" -Force
   New-Item -Path $env:APPDATA\ttcli -Name "config.json" -ItemType "file" -Force
+  Add-Content -Path "$env:APPDATA\ttcli\config.json" -Value "{color: 'green'}"
   New-Item -Path $env:APPDATA\ttcli -Name "log.txt" -ItemType "file" -Force
   Invoke-WebRequest -Uri "https://raw.githubusercontent.com/T-D3V/TimeTrackerCLI/master/ttcli.ps1" -OutFile $env:APPDATA\ttcli\ttcli.ps1
   [System.Environment]::SetEnvironmentVariable('Path',$env:Path + ";$env:APPDATA\ttcli",[System.EnvironmentVariableTarget]::Machine)
