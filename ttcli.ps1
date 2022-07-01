@@ -6,7 +6,10 @@ param (
   $function,
   [Parameter()]
   [bool]
-  $hidden
+  $hidden,
+  [Parameter()]
+  [bool]
+  $debugScript
 )
 
 #Get Config
